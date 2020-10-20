@@ -1,0 +1,30 @@
+﻿@model Food
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="row justify-content-center m-3">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="text-center">@Model.FoodName</h1>
+            </div>
+            @*<img src="~/Images/abc.jpg" />*@
+            <div class="card-body text-center">
+                @{
+                    var photopath = "~/Images/" + (Model.Picture ?? "abc.jpg");
+                }
+                <img class="card-img-top imageThumbail" src="@photopath" style="height:150px" asp-append-version="true" /> <hr />
+                <img src="~/Images/@Model.Picture" />
+                <h4>Food ID: @Model.FoodId</h4>
+                <h4>Code: @Model.CodeNumber</h4>
+                <h4>Type: @Model.Type</h4>
+                <h4>Price: @Model.Price</h4>
+
+            </div>
+            <div class="card-footer text-center">
+                <a asp-controller="Food" asp-action="Index" class="btn btn-primary m-1" style="width:auto">Back To Food Manu</a>
+
+            </div>
+        </div>
+    </div>
+</div>

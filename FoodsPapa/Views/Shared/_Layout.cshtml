@@ -1,0 +1,114 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <environment include="Development">
+        <link href="~/lib/css/bootstrap.css" rel="stylesheet" />
+        <script src="~/lib/jquery.js"></script>
+    </environment>
+</head>
+<body>
+
+    <div class="nav navbar  bg-info">
+        <div class="container">
+
+            <ul class="nav">
+                <li class="nav-item"><a asp-action="Index" asp-controller="Food" class="nav-link  ">Food Manu</a></li>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <li class="nav-item"><a asp-action="Create" asp-controller="Food" class="nav-link ">Create New</a></li>
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Members" asp-action="index">MemberList</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Members" asp-action="create">AddMember</a>
+                    </li>
+
+                
+                    <li class="nav-item"><a asp-action="Index" asp-controller="OrderOnline" class="nav-link ">OrderOnline</a></li>
+                }
+                </ul>
+            <ul class="navbar nav ml-auto">
+                @*@if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))*@
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Manage
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" asp-controller="Administration" asp-action="ListOfUsers">Manage Users</a>
+                            <a class="dropdown-item" asp-controller="Administration" asp-action="ListOfRoles">Manage Roles</a>
+                        </div>
+                    </li>
+
+                }
+
+
+            </ul>
+            <ul class="navbar nav ml-auto">
+                @if (SignInManager.IsSignedIn(User))
+                {
+
+                    <li class="nav-item">
+                        <form method="post" asp-controller="Account" asp-action="Logout">
+                            <button type="submit" style="width:auto" class="nav-link btn btn-link py-0">
+                                Logout @User.Identity.Name
+                            </button>
+                        </form>
+
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Registration">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
+                    </li>
+                }
+
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    <footer class="bg-info">
+        <p class="text-center">Tanbin's FoodsPapa @DateTime.Now.Year</p>
+    </footer>
+
+
+    <environment include="Development">
+        <script src="~/lib/js/bootstrap.js"></script>
+        <script src="~/lib/jquery.validate.js"></script>
+        <script>
+            // Add the following code if you want the name of the file appear on select
+            $(".custom-file-input").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            });
+        </script>
+        @if (IsSectionDefined("Scripts"))
+        {
+          @RenderSection("Scripts", required: false)
+         }
+
+
+
+    </environment>
+
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+﻿@model HomeIndexViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="row justify-content-center m-3">
+
+    <div class="col-sm-8">
+        @{ var photoPath = "~/MbrImage/" + (Model.Member.Image ?? "tanbin.jpg");}
+        <div class="card">
+            <div class="card-header">
+                <h1>@Model.Member.MemberName</h1>
+            </div>
+            <div class="card-body text-center">
+                <img class="card-img-top imageThumbnail" src="@photoPath" asp-append-version="true" />
+                <h4>Employee ID: @Model.Member.MemberId</h4>
+                <h4>Email:@Model.Member.Email</h4>
+                <h4>Department: @Model.Member.Address</h4>
+                <h4>Phone: @Model.Member.Phone</h4>
+            </div>
+            <div class="card-footer text-center">
+                <a asp-controller="Members" asp-action="Index" class="btn btn-primary">Back</a>
+                <a href="#" class="btn btn-info">Edit</a>
+                <a href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a asp-action="Index" asp-controller="Members" class="text-decoration-none text-dark">Back To List</a>
+</div>

@@ -1,0 +1,60 @@
+﻿@model FoodVM
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<div class="row">
+    <div class="offset-1 col-4">
+        <h1>Edit</h1>
+        <hr />
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="alert alert-warning"></div>
+            <input type="hidden" asp-for="FoodId" />
+            <input type="hidden" asp-for="PicturePath" />
+            <div class="form-group">
+                <label asp-for="FoodName" class="col-form-label col-3"></label>
+                <input asp-for="FoodName" class="form-control col-9" />
+                <span asp-validation-for="FoodName"></span>
+            </div>
+
+
+
+            <div class="form-group">
+                <label asp-for="Type" class="col-form-label col-3"></label>
+                <select asp-for="Type" class="custom-select" asp-items="Html.GetEnumSelectList<FoodType>()">
+                    <option>Plz Select Type</option>
+                </select>
+                <span asp-validation-for="Type"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CodeNumber" class="col-form-label col-3"></label>
+                <input asp-for="CodeNumber" class="form-control col-9" />
+                <span asp-validation-for="CodeNumber"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Price" class="col-form-label col-3"></label>
+                <input asp-for="Price" class="form-control col-9" />
+                <span asp-validation-for="Price"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Picture" class="col-form-label col-3"></label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" asp-for="Picture">
+                    <label class="custom-file-label" asp-for="Picture">Choose file</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-outline-info" value="Save Changes" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index" asp-controller="Food" class="text-decoration-none text-dark">Back To List</a>
+</div>

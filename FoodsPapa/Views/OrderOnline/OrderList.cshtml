@@ -1,0 +1,170 @@
+﻿@*<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Oderlist</title>
+
+    <script src="~/js/angular.js"></script>
+    <script src="~/js/angular-route.js"></script>
+
+    <script src="~/Order/module.js"></script>
+    <script src="~/Order/service.js"></script>
+    <script src="~/Order/controller.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="myController">
+    <div class="container">
+        <hr />
+        <div class="alert alert-info alert-dismissible" role="alert" ng-if="message">
+            {{message}}
+            <button type="button" class="close" aria-label="close">
+                <span aria-hidden="true" ng-click="clearInfo()">&times;</span>
+            </button>
+        </div>
+
+        <h4>
+            Order List<button type="button" class="btn btn-sm btn-info float-right" data-toggle="modal" data-target="#AddModal">+ Add New Order</button>
+        </h4>
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr class="bg-secondary text-light">
+                    <td>Odr No</td>
+                    <td>Customer Name</td>
+                    <td>Address</td>
+                    <td>Phone</td>
+                    <td>Foodtype</td>
+                    <td>CodeNumber</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="order in orderOnlines">
+                    <td>{{$index+1}}</td>
+                    <td>{{order.CustomerName}}</td>
+                    <td>{{order.Address}}</td>
+                    <td>{{order.Phone}}</td>
+                    <td>{{order.Type}}</td>
+                    <td>{{order.FoodCode}}</td>
+                   
+                    <td>
+                        <button type="button" data-toggle="modal" data-target="#editModal" ng-click="selectedOrder(order)" class="btn btn-sm btn-info">Edit</button>
+                        <button type="button" data-toggle="modal" data-target="#deleteModal" ng-click="selectedOrder(order)" class="btn btn-sm btn-danger">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add New Order</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form ng-submit="submit()">
+
+                            <div class="form-group">
+                                <label for="odername" class="col-form-label">Customer Name:</label>
+                                <input type="text" class="form-control form-control-sm" ng-model="newOrder.CustomerName" id="odername" placeholder="Customer Name..." required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fulladdress" class="col-form-label">Address:</label>
+                                <input type="text" class="form-control form-control-sm" ng-model="newOrder.Address" placeholder="Address..." id="fulladdress" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="col-form-label">Phone:</label>
+                                <input type="text" class="form-control form-control-sm" ng-model="newOrder.Phone" placeholder="Phone..." id="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="type" class="col-form-label">Type:</label>
+                                <input type="text" class="form-control form-control-sm" ng-model="newOrder.Type" placeholder="Type..." id="type" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="code" class="col-form-label">FoodCode:</label>
+                                <input type="text" class="form-control form-control-sm" ng-model="newOrder.FoodCode" placeholder="code..." id="code" required>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                <button type="submit" id="submit" class="btn btn-info" data-dismiss="modal" ng-click="addOrder()">Confirm</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Order</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form>
+                            <input type="hidden" ng-click="clickedOrder.OrderId" />
+
+                            <div class="form-group">
+                                <label for="odername" class="col-form-label">Customer Name:</label>
+                                <input type="text" class="form-control form-control-sm" ng-model="clickedOrder.CustomerName" id="odername" placeholder="Customer Name...">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="col-form-label">Phone:</label>
+                                <input type="text" class="form-control form-control-sm" ng-model="clickedOrder.Phone" placeholder="Phone..." id="phone">
+                            </div>
+                            <div class="form-group">
+                                <label for="type" class="col-form-label">Type:</label>
+                                <input type="text" class="form-control form-control-sm" ng-model="clickedOrder.Type" placeholder="Type..." id="type">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="code" class="col-form-label">FoodCode:</label>
+                                <input type="text" class="form-control form-control-sm" ng-model="clickedOrder.FoodCode" placeholder="code..." id="code">
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-info" data-dismiss="modal" ng-click="updateOrder()">Update Oder</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete Order</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure ?? delete the Order : <b class="text-primary"><u>{{clickedOrder.CustomerName}}</u></b></p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-info" data-dismiss="modal" ng-click="deleteOrder()">Yes</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>*@

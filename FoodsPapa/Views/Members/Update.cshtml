@@ -1,0 +1,74 @@
+﻿@model EditMemberVM
+
+@{
+    ViewData["Title"] = "Update";
+
+    var photoPath = "~/MbrImage/" + (Model.ExistingPhotoPath ?? "tanbin.jpg");
+}
+
+<h1>Update</h1>
+<form asp-controller="Members" asp-action="Update" enctype="multipart/form-data" method="post" class="mt-3">
+    <input hidden asp-for="MemberId" />
+    <div class="form-group row">
+        <label asp-for="MemberName" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="MemberName" class="form-control" placeholder="Name" />
+            <span asp-validation-for="MemberName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Email" class="form-control" placeholder="Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Address" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Address" class="form-control" placeholder="Address" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Phone" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Phone" class="form-control" placeholder="Phone" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="ImageFile" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <div class="custom-file">
+                <input asp-for="ImageFile" class="form-control custom-file-input" />
+                <label class="custom-file-label">Click here to change....</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row col-sm-4 offset-4">
+        <img class="imageThumbnail" src="@photoPath" asp-append-version="true" />
+    </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a asp-controller="Members" asp-action="index" class="btn btn-primary">Cancel</a>
+        </div>
+    </div>
+    @*@section Scripts
+        {
+            $(document).ready(function(){
+            $('.custom-file-input').on("change", function(){
+            var fileName=$(this).val().split("\\").pop();
+            $(this).next('.custom-file-label').html(fileName);
+            });
+         });
+        }*@
+</form>
+
+<div>
+    <a asp-action="Index" asp-controller="Members" class="text-decoration-none text-dark">Back To List</a>
+</div>
